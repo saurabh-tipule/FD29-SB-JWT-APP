@@ -73,4 +73,14 @@ public class UserController {
 		return "contactUs";
 	}
 
+	@GetMapping(value = "/aboutus")
+	public String aboutusPage() {
+		System.out.println("About Us Endpoint...!");
+
+		// logic 50 150 Lines
+
+		return "aboutus";
+
+	}
+
 }
