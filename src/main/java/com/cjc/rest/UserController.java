@@ -29,49 +29,48 @@ public class UserController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@PostMapping("/addNewUser")
 	public String addNewUser(@RequestBody UserInfo userInfo) {
 		return service.addUser(userInfo);
 	}
 
-	
 	@PostMapping("/login")
 	public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-		
+
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-		
-		
+
 		if (authentication.isAuthenticated()) {
 			return jwtService.generateToken(authRequest.getUsername());
 		} else {
 			throw new UsernameNotFoundException("Invalid User Credentials..!");
 		}
 	}
-	
+
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "Welcome to Complete Java Classes";
 	}
 
-
 	@GetMapping("/user/userProfile")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public String userProfile() {
-		//validate Token
+		// validate Token
 		return "Welcome to User Profile";
 	}
-
-	
-	
 
 	@GetMapping("/admin/adminProfile")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public String adminProfile() {
-		//validate Token
+		// validate Token
 		return "Welcome to Admin Profile";
 	}
-	
+
+	@GetMapping(value = "/contactUs")
+	public String contactUs() {
+		System.out.println("Conatct Us Page..!");
+		return "contactUs";
+	}
 
 }
